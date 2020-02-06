@@ -69,7 +69,7 @@
     </div>
     <script src="http://gizumo-inc.github.io/sample/javascript-lesson/jquery-curriculum/common/js/jquery.js"></script>
     <script>
-      $(function() {
+      //$(function() {
         // $(function() { });　DOMが準備されてからjQueryを実行するおまじない。
         // jQueryを書くときはこの中に実際の処理を書くことになる。詳しくはこちら( http://www.jquerystudy.info/tutorial/01/06.html )
         $('#q1').css('color', 'red');
@@ -123,10 +123,11 @@
         // .animate({〜}, 2000);　さっきも言ったように引数には関数や値を渡すことも出来るし、「{}」オブジェクトを渡すことも出来ます。
         // オブジェクトは難しいので今は説明しませんが、「引数2つとること出来るんだー、ふーん」ぐらいに考えておいて下さい。（ちなみに関数を作る際に引数は何個でも作れます。）
         $('#q7').find('li').click(function() {
-          var targetNum = $(this).index();
-          console.log(targetNum);
-          alert(targetNum);
-        });
+            var targetNum = $(this).index();
+            console.log(targetNum);
+            alert(targetNum);
+          }
+        );
         // #q7内のli要素をクリックした際にその要素が何番目の要素かアラートとコンソールで教えてくれるはずです。
         // find()　findメソッドは指定されたDOM要素から引数に渡された要素を（ここではli）を取ってくるメソッドです。
         // index()　はその要素が何番目の要素か教えてくれるメソッドです。慣れないと理解しづらいのですが、最初の要素をクリックすると0という値が返ってきますが、それは正常な挙動です。
@@ -134,10 +135,11 @@
         // console.log()　chrome developer toolのconsoleのタブに引数の値が出力されます。非常に重要です。
         // alert() 引数の値をアラートとして表示します。これまた非常に重要です。
         $('#q8').hover(function() {
-          $(this).addClass('large');
-        }, function() {
-          $(this).removeClass('large');
-        });
+            $(this).addClass('large');
+          }, function() {
+            $(this).removeClass('large');
+          }
+        );
         // hover()　hoverメソッドは引数が1つの場合、2つの場合で挙動が異なる少し特殊な関数です。
         // hover(関数)の場合はhoverした場合に関数を実行します。
         // hover(関数, 関数)の場合はhoverした後に第一引数の関数がhoverした時に実行され、hoverが離れた時に第二引数を実行します。
@@ -159,7 +161,7 @@
         // .eq() DOM要素の引数の値に等しい番号のDOMを指定する。
         // $(this).index()で取得された値（何番目）をeq()の引数に入れることによって、#q10と対応した#q11のDOMを取得出来る。
         // ここまででjQueryでよく使う重要なメソッドはほぼほぼ抑えられたはずなのでこれ以降のカリキュラムに役立ててください。
-      });
+      //});
     </script>
   </body>
 </html>
