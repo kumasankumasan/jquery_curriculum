@@ -41,60 +41,116 @@
       // .length 要素の個数を取得します。
 
       $(function(){
+
+        var pages = [];
+        var numCount = $('.slider-list li').length;
+        var num = 0;
+
+        for(var i = 0; i < numCount; i++){
+          // if (i == 0) {
+            pages.push(num);
+          // } else {
+            num += - $('.slider-list li').eq(i).width();
+            // pages.push(num);
+          // }
+        }
+
+        console.log(pages);
+        $(this).data('ctrl')
+
+        var pagesNum = 0;
+
+        $(".slider-ctrl-btn").click(function () {
+          if ($(this).data('ctrl') === 'next') {
+            // var step = 1;
+            pagesNum++;
+            console.log(pagesNum);
+            if (pagesNum === pages.length) {
+              pagesNum = 0;
+            }
+            // $(".slider-list").animate({
+            //   left: pages[pagesNum]
+            // })
+          } else if ($(this).data('ctrl') === 'prev') {
+            // var back = -1;
+            pagesNum--;
+            if (pagesNum === -1) {
+              pagesNum = pages.length - 1;
+            }
+            // $(".slider-list").animate({
+            //   left: pages[pagesNum]
+            // })
+          }
+          $(".slider-list").animate({
+            left: pages[pagesNum]
+          });
+        });
+/*
+        var imgCount = $('.slider-list li').length;
+        console.log(imgCount);
+
+        var width = -$('.slider-list li').width();
+
+        var imgWidth = [];
+        imgWidth[0] = width*0; 
+        imgWidth[1] = width*1;
+        imgWidth[2] = width*2;
+        imgWidth[3] = width*3;
+
+        console.log(imgWidth);
+        
+      
         var counter = 0;
 
-        $('.is-next').click(function() {
-          counter++;
-        
-          var next = $(this).data();
-          if(counter === 1){
-             $('.slider-list').animate({
-               'left' : '-600px'
-             });
-           }else if(counter === 2){
-            $('.slider-list').animate({
-               'left' : '-1200px'
-             });
-           }else if(counter === 3){
-            $('.slider-list').animate({
-               'left' : '-1800px'
-             });
-           }else if(counter === 4){
-            $('.slider-list').animate({
-               'left' : '0px'
-             });
-             counter = 0;
-           }
-          console.log(next);
-          console.log(counter);
-        });
+        $('.slider-ctrl-btn').click(function() {
+          if($(this).data('ctrl') === 'next'){
+            console.log(width);  
+            counter++;
 
-        
-        $('.is-prev').click(function() {
-          counter--;
-        
-          var prev = $(this).data();
-          if(counter === -1){
-             $('.slider-list').animate({
-               'left' : '-1800px'
-             });
-             counter = 3;
-           }else if(counter === 2){
-            $('.slider-list').animate({
-               'left' : '-1200px'
-             });
-           }else if(counter === 1){
-            $('.slider-list').animate({
-               'left' : '-600px'
-             });
-           }else if(counter === 0){
-            $('.slider-list').animate({
-               'left' : '0px'
-             });
+            if(counter === 1){
+              $('.slider-list').animate({
+                'left' : width
+              });
+            }else if(counter === 2){
+              $('.slider-list').animate({
+                'left' : width*2
+              });
+            }else if(counter === 3){
+              $('.slider-list').animate({
+                'left' : width*3
+              });
+            }else if(counter === 4){
+              $('.slider-list').animate({
+                'left' : '0px'
+              });
+              counter = 0;
            }
-          console.log(prev);
+
+          }else if($(this).data('ctrl') === 'prev'){
+            console.log(width);
+            counter--;
+            if(counter === -1){
+              $('.slider-list').animate({
+                'left' : width*3
+              });
+              counter = 3;
+            }else if(counter === 2){
+              $('.slider-list').animate({
+                'left' : width*2
+              });
+            }else if(counter === 1){
+              $('.slider-list').animate({
+                'left' : width
+              });
+            }else if(counter === 0){
+              $('.slider-list').animate({
+                'left' : '0px'
+              });
+            }
+          }
           console.log(counter);
         });
+        */
       });
 
 

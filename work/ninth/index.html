@@ -18,7 +18,8 @@
       // [使うメソッド]
       // $.each(配列, function functionName() {}) 配列に対しての繰り返し処理
       // .html() 要素の中に引数を代入する。（まずは.append() でやってみましょう）
-      // $.ajax({}) 外部ファイルやURLに対してデータをリクエストすることができます。これだけだと少しわからないと思うので下に文法を書いておきます。
+      // $.ajax({}) 外部ファイルやURLに対してデータをリクエストすることができます。
+      //これだけだと少しわからないと思うので下に文法を書いておきます。
       //
       // [文法]
       // $.ajax({
@@ -42,6 +43,37 @@
       // </li>
       //
       // このテンプレートに取得してきた中身を入れて表示します。
+      $(function() {
+        $.ajax({
+          url: './data.json'
+        })
+      
+        .done(function(data) {
+            console.log(data);
+            var color0 = data.colorsArray;
+            console.log(color0);
+             //色
+            var color1 = color0.hexValue;
+            console.log(color1);
+            //テキスト
+            var text1 = color0.colorName;
+            console.log(text1);
+
+
+            $.each(data.colorsArray,function(){
+            
+              $('.colorList').append(
+                $('<li>').addClass("colorList__item").append(
+                  $('<p>').addClass("colorList__title").css('background-color',$(this)[0].hexValue).text($(this)[0].hexValue)
+                )
+              );
+            });
+        });
+        
+        
+      });
     </script>
+
+    
   </body>
 </html>

@@ -42,6 +42,61 @@
       // .offset().top 要素の位置を取得します。
       // .fadeIn() 要素をフェードインさせる。
       // .fadeOut() 要素をフェードアウトさせる。
+
+      $(function() {
+        $('.menu__btn').click(function(){
+          var btn = $(this).data('scroll-place-type');//ボタンのどこが押されたか、dataを取得する
+          console.log(btn);
+
+          $('.title').each(function(index, value){
+            var titleTop = $(this).offset().top;//タイトルのTopの位置を取得する
+            console.log(titleTop);
+
+            var titleType = $(this).data('scroll-place-type');
+            console.log(titleType);
+             
+            // if(btn === "home"){
+            //     $('html,body').animate({ 
+            //       scrollTop: 130
+            //   })
+            // }else if(btn === "news"){
+            //       $('html,body').animate({ 
+            //         scrollTop: 836
+            //     })
+            // }else if(btn === "about"){
+            //       $('html,body').animate({ 
+            //         scrollTop: 1543
+            //     })
+            // }
+
+            if(btn === titleType){
+              var titleTop = $(this).offset().top;
+                $('html,body').animate({ 
+                  scrollTop: titleTop
+              })
+            }
+          });
+        });
+
+        $(window).scroll(function(){
+          var top = $(this).scrollTop();//画面のスクロール位置を取得
+          console.log(top);
+
+          if(top >= 100){
+            $('.scrollTopBtn').fadeIn();//100px以上になったら、表示させる
+          }else{
+            $('.scrollTopBtn').fadeOut();//100px以下になったら、非表示にする
+          }
+        });
+
+        $('.scrollTopBtn').click(function(){
+          $('html,body').animate({ 
+            scrollTop: 0
+          })
+        });
+      });
+
+
     </script>
   </body>
 </html>
