@@ -44,30 +44,22 @@
       //
       // このテンプレートに取得してきた中身を入れて表示します。
       $(function() {
+        var colorList = '';
         $.ajax({
           url: './data.json'
         })
       
         .done(function(data) {
-            console.log(data);
-            var color0 = data.colorsArray;
-            console.log(color0);
-             //色
-            var color1 = color0.hexValue;
-            console.log(color1);
-            //テキスト
-            var text1 = color0.colorName;
-            console.log(text1);
-
 
             $.each(data.colorsArray,function(){
-            
-              $('.colorList').append(
-                $('<li>').addClass("colorList__item").append(
-                  $('<p>').addClass("colorList__title").css('background-color',$(this)[0].hexValue).text($(this)[0].hexValue)
-                )
-              );
-            });
+
+             colorList += '<li class="colorList__item">' +
+                            '<p class="colorList__title" style="background-color:'+ $(this)[0].hexValue + '">' + $(this)[0].colorName + '</p>' +
+                          '</li>';
+                          console.log(data);
+           });
+
+           $('.colorList').html(colorList)
         });
         
         

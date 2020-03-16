@@ -68,6 +68,111 @@
       //
       //
       //
+      
+        
+      var keyword = '';
+      var differentWord = '';
+      var page = 0;
+      $('#js-search-button').click(function(){
+      });
+      $(function(){
+        $('#js-search-button').on('click',function(){
+          searchBooks();
+        });
+                  
+      function searchBooks() {
+        console.log('-----------click-----------');//クリックした時の区切り
+        console.log(keyword);
+        
+        //違う検索ワード
+        differentWord = keyword;
+        //検索ワード
+        keyword = $('#js-search-word').val();
+        //入力されたワード
+        console.log(keyword);
+        console.log(differentWord);
+        
+        if(keyword != differentWord){
+          //違うキーワードが入力されたら('.lists')の中身を空にする
+          $('.lists').empty();
+          //変数pageの値を0にする
+          page = 0;
+        }
+          //変数pageの値
+          console.log(page);
+          //クリックされると変数pageの値が+1される
+          page += 1;
+          //変数pageの値
+          console.log(page);
+        //データの取得
+          $.ajax({
+            url: 'https://app.rakuten.co.jp/services/api/BooksTotal/Search/20130522',
+            type: 'GET',
+            datatype: 'json',
+            data: {
+              // 「区分:サービス固有パラメーター」を確認して、必要な情報をdata内に入れましょう。
+              applicationId: '1019399324990976605', // (今回はこのIDを使用してください)
+              booksGenreId: '001',
+              keyword: keyword,
+              hits: '20',
+              page: page
+            }
+          })
+          //通信成功した時
+          .done(function(data) {
+            // この中にデータ取得後の動きを記述していきます。
+            getBooksSuccess(data);
+            console.log(data);
+          })
+          //通信失敗した時
+          .fail(function(errData) {
+            getBooksError(errData);
+            console.log(errData);
+            //検索ワードの指定がない・検索ワードが半角英数字1文字
+          });
+        }
+        //通信成功した時の処理
+        function getBooksSuccess(data) {
+          //画像達
+          var books = ''; 
+          if (data.count > 0){//検索結果が0件以上ある時
+            $.each(data.Items,function(i,Items){
+              console.log(Items);
+              
+              books += '<li class="lists__item">' +
+                      '<div class="lists__item__inner">' +
+                      '<a href=' + Items.Item.itemUrl + ' class="lists__item__link" target="_blank">' +
+                      '<img src=' + Items.Item.largeImageUrl + ' class="lists__item__img" alt=' + Items.Item.title + '>' +
+                      '<p class="lists__item__detail">作品名：' + Items.Item.title + '</p>' +
+                      '<p class="lists__item__detail">作者　：' + Items.Item.author + '</p>' +
+                      '<p class="lists__item__detail">出版社：' + Items.Item.publisherName + '</p>' +
+                      '</a>' +
+                      '</div>' +
+                      '</li>';
+            });
+            $('.lists').prepend(books);
+          } else if(data.count == 0) {//検索結果が0件の時
+            $('.message').remove();
+            $('.lists').before('<div class="message">検索結果が見つかりませんでした。<br>別のキーワードで検索して下さい。</div>'); 
+          }
+          console.log(data.count)
+        }          
+        //通信失敗した時の処理
+        function getBooksError(errData){
+          if(errData.status == 400){
+            $('.message').remove();
+            $('.lists').html('<div class="message">検索結果が見つかりませんでした。<br>別のキーワードで検索して下さい。</div>');
+          } else if(errData.status == 429) {
+            //「検索する」を連打したとき
+            $('.message').remove();
+            $('.lists').html('<div class="message">リクエスト数が上限に達しました。しばらく時間を空けてから、ご利用ください。</div>');
+          } else if(errData.status == 0) {
+            //ネットが切れているとき
+            $('.message').remove();
+            $('.lists').html('<div class="message">インターネットに接続されていません</div>');
+          }
+        }
+      });
     </script>
   </body>
 </html>
